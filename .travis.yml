@@ -19,3 +19,15 @@ after_success:
   - docker push ashutiwarydoc/multi-nginx
   - docker push ashutiwarydoc/multi-server
   - docker push ashutiwarydoc/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-east-1'
+  app: 'docker-complex'
+  env: 'Docker-complex-env '
+  bucket_name: 'elasticbeanstalk-us-east-1-014498642994'
+  bucket_path: 'docker-complex'
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
