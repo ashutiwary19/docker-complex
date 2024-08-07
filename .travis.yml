@@ -11,7 +11,7 @@ scripte:
 
 after_success:
   - docker build -t ashutiwarydoc/multi-client ./client
-  - docker buiild -t ashutiwarydoc/multi-nginx ./nginx
+  - docker build -t ashutiwarydoc/multi-nginx ./nginx
   - docker build -t ashutiwarydoc/multi-server ./server
   - docker build -t ashutiwarydoc/multi-worker ./worker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
