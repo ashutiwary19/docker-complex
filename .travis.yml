@@ -1,0 +1,21 @@
+sudo: required
+language: generic
+services:
+  - docker
+
+before_install:
+  - docker build -t ashutiwarydoc/react-test -f ./client/Dockerfile.dev ./client
+
+scripte:
+  - docker run -e CI=true ashutiwarydoc/react-test npm run test
+
+after_success:
+  - docker build -t ashutiwarydoc/multi-client ./client
+  - docker buiild -t ashutiwarydoc/multi-nginx ./nginx
+  - docker build -t ashutiwarydoc/multi-server ./server
+  - docker build -t ashutiwarydoc/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push ashutiwarydoc/multi-client
+  - docker push ashutiwarydoc/multi-nginx
+  - docker push ashutiwarydoc/multi-server
+  - docker push ashutiwarydoc/multi-worker
